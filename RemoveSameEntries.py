@@ -12,12 +12,11 @@ if __name__ == "__main__":
     for line in f:
       c0 += 1
       (last_time, last_schedule) = line.split("\t")
-      last_schedule = json.loads(last_schedule)
-      curr = last_schedule
-      del curr["channelMetadataResponse"]["metaData"]["dateTime"]
-      if curr != last:
+      last_schedule_obj = json.loads(last_schedule)
+      del last_schedule_obj["channelMetadataResponse"]["metaData"]["dateTime"]
+      if last_schedule_obj != last:
         c1 += 1
-        fw.write(last_time + "\t" + json.dumps(last_schedule) + "\n")
-        last = curr
+        fw.write(last_time + "\t" + last_schedule)
+        last = last_schedule_obj
 
   print "Read", c0, "lines. Write", c1, "lines."
